@@ -5,7 +5,7 @@ project: beats
 target: beats-decode-cef
 
 # Base image to run the binary in.
-image: ghcr.io/lotdeef/beats:latest
+# image: ghcr.io/lotdeef/beats:latest
 
 # List of commands used to test the target
 cmds:
