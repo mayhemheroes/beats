@@ -1,15 +1,4 @@
-# Namespaced project name that the target belongs to
 project: beats
-
-# Target name (should be unique within the project)
 target: beats-decode-cef
-
-# Base image to run the binary in.
-# image: ghcr.io/lotdeef/beats:latest
-
-# List of commands used to test the target
 cmds:
-
-  # Command used to start the target, "@@" is the input file
-  # (when "@@" is omitted Mayhem defaults to stdin inputs)
-  - cmd: ./fuzz.libfuzzer
+  - cmd: ./decode-cef-fuzz.libfuzzer
