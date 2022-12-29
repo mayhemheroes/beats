@@ -1,13 +1,13 @@
-# Build Geth in a stock Go builder container
 FROM fuzzers/go-fuzz:1.2.0 as builder
 
-ADD . beats
-WORKDIR /go/beats
+ARG project='beats'
+ARG fuzzTargetPath='x-pack/filebeat/processors/decode_cef/cef/fuzz'
+ARG fuzzTarget='decode-cef-fuzz'
 
-RUN GO_ENABLED=0 go-fuzz-build -libfuzzer -o /fuzz.a ./x-pack/filebeat/processors/decode_cef/cef/fuzz/
-RUN clang -fsanitize=fuzzer /fuzz.a -o /fuzz.libfuzzer
+ADD . ${project}
+WORKDIR ${project}
+RUN GO_ENABLED=0 go-fuzz-build -libfuzzer -o /${fuzzTarget}.a ./${fuzzTargetPath}
+RUN clang -fsanitize=fuzzer /${fuzzTarget}.a -o /${fuzzTarget}.libfuzzer
 
 FROM ubuntu:20.04
-COPY --from=builder /fuzz.libfuzzer /
-
-# CMD ["./bitutil.libfuzzer"]
+COPY --from=builder /decode-cef-fuzz.libfuzzer /
