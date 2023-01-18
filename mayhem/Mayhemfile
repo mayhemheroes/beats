@@ -1,0 +1,4 @@
+project: beats
+target: beats-decode-cef
+cmds:
+  - cmd: ./decode-cef-fuzz.libfuzzer
